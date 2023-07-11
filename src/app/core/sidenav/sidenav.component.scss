@@ -1,0 +1,201 @@
+@import 'variables';
+
+.sidenav {
+    background: $sidenav-background;
+    transition: $sidenav-transition;
+    position: $sidenav-position;
+    z-index: $sidenav-z-index;
+    top: $zero-space;
+    width: $sidenav-collapsed-width;
+    height: $full-height;
+    box-shadow: $sidenav-box-shadow;
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        padding: $sidenav-logo-container-padding;
+        width: $full-perc;
+
+        .logo {
+            background: $white;
+            text-align: center;
+            width: $rem-3;
+            min-width: $rem-3;
+            border-radius: $rem-0-313;
+            padding: $rem-0-313;
+            font-size: $size-24;
+            font-weight: $bold-9;
+            cursor: pointer;
+            border: none;
+        }
+
+        .logo-text {
+            margin-left: $rem-1-5;
+            font-size: $size-24;
+            font-weight: $bold-7;
+            color: $white;
+
+        }
+
+        .btn-close {
+            margin-left: auto;
+            cursor: pointer;
+            width: $rem-2;
+            height: $rem-2;
+            border-radius: $half-perc;
+            background-color: transparent;
+            border: none;
+
+            .fa-times {
+                color: $white;
+                font-size: $size-24;
+            }
+        }
+
+    }
+}
+
+.sidenav-open {
+    width: $sidenav-open-width;
+}
+
+.sidenav-nav {
+    list-style: none;
+    padding: $rem-0-938;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+
+    .sidenav-nav-item {
+        width: $full-perc;
+        margin-bottom: $rem-0-625;
+
+        .sidenav-nav-link {
+            display: flex;
+            align-items: center;
+            height: $rem-3;
+            color: $color-light;
+            text-decoration: none;
+            transition: $transition-all-3-ease;
+            border-radius: $rem-0-625;
+
+            .sidenav-link-icon {
+                font-size: $size-22;
+                width: $rem-2;
+                min-width: $rem-2;
+                margin: $zero-space $rem-0-5;
+                text-align: center;
+            }
+
+            .sidenav-link-text {
+                margin-left: $rem-1-5;
+            }
+        }
+
+        .sidenav-nav-link:hover {
+            background-color: $white;
+            color: $black;
+
+            .menu-collapse-icon {
+                color: $black;
+            }
+        }
+    }
+}
+
+.active {
+    background-color: $white;
+
+    .menu-collapse-icon, .sidenav-link-icon, .sidenav-link-text {
+        color: $black;
+    }
+}
+
+.active-sublevel {
+    color: $color-light !important;
+}
+
+.menu-collapse-icon {
+    font-size: $size-25;
+    width: $rem-2;
+    min-width: $rem-2;
+    margin: auto $rem-0-5 auto auto;
+    text-align: center;
+    color: $color-light;
+}
+
+.sublevel-nav {
+    list-style: none;
+    margin-left: $space-10;
+
+    .sublevel-nav-item {
+        .sublevel-nav-link {
+            display: flex;
+            align-items: center;
+            height: $rem-3;
+            color: $light-grey;
+            text-decoration: none;
+            border-radius: $rem-0-625;
+            transition: $transition-all-3-ease;
+
+            .sublevel-link-icon {
+                font-size: $size-4;
+                width: $rem-2;
+                min-width: $rem-2;
+                margin: $zero-space $rem-0-5;
+                text-align: center;
+            }
+
+            .sublevel-link-text {
+                margin-left: $rem-0-8;
+            }
+
+            &:hover {
+                color: $color-light;
+            }
+        } 
+    }
+}
+
+//scrollbar and visibility on hover and focus
+.scrollwrap {
+    overflow-y: auto;
+    visibility: hidden;
+    height: calc($full-perc - $rem-3-65);
+}
+
+.sidenav-nav,
+.scrollwrap:hover,
+.scrollwrap:focus {
+    visibility: visible;
+}
+
+.scrollwrap_delayed {
+    transition: visibility 0.5s 0.2s;
+
+    &:hover {
+        transition: visibility 0.2s 0.2s;
+    }
+}
+
+// //works on chrom, edge and safari
+.scrollwrap::-webkit-scrollbar { 
+    width: $space-10;
+}
+
+.scrollwrap::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scrollwrap::-webkit-scrollbar-thumb {
+    background-color: $light-grey-1;
+    border-radius: $space-20;
+}
+
+// //works on firefox
+.scrollwrap {
+    scrollbar-width: thin;
+    scrollbar-color: $light-grey-1 transparent;
+}
