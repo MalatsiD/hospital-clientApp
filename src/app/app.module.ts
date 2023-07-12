@@ -5,8 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { OverlayModule } from '@angular/cdk/overlay';
-import { CdkMenuModule } from '@angular/cdk/menu';
 import { CoreModule } from './core/core.module';
 
 @NgModule({
@@ -17,9 +15,7 @@ import { CoreModule } from './core/core.module';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    CoreModule,
-    OverlayModule,
-    CdkMenuModule
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

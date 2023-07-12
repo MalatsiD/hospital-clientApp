@@ -1,0 +1,23 @@
+@import 'variables';
+
+.body {
+    width: calc($full-perc - $sidenav-collapsed-width);
+    margin-top: $rem-5-75;
+    margin-left: $sidenav-collapsed-width;
+    z-index: $zero-space;
+    position: relative;
+    top: $zero-space;
+    transition: $transition-all-5-ease;
+    background: $color-light-1;
+    padding: $rem-3;
+}
+
+.body-trimmed {
+    width: calc($full-perc - $sidenav-open-width);
+    margin-left: $sidenav-open-width;
+}
+
+.body-md-screen {
+    width: calc($full-perc - $sidenav-collapsed-width);
+    margin-left: $sidenav-collapsed-width;
+}

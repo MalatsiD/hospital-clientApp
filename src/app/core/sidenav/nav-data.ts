@@ -7,84 +7,97 @@ export const navbarData: INavbarData[] = [
         label: 'Dashboard'
     },
     {
-        routeLink: 'products',
-        icon: 'fa fa-box-open',
-        label: 'Products',
+        routeLink: 'employees',
+        icon: 'fa fa-user-doctor',
+        label: 'Employees'
+    },
+    {
+        routeLink: 'patients',
+        icon: 'fa fa-bed-pulse',
+        label: 'Patients'
+    },
+    {
+        routeLink: 'departments',
+        icon: 'fa-regular fa-building',
+        label: 'Departments'
+    },
+    {
+        routeLink: 'wards',
+        icon: 'fa fa-hospital-user',
+        label: 'Wards'
+    },
+    {
+        routeLink: 'pharmacy',
+        icon: 'fa fa-prescription-bottle-medical',
+        label: 'Pharmacy',
         items: [
             {
-                routeLink: 'products/level1.1',
-                label: 'Level 1.1',
-                items: [
-                    {
-                        routeLink: 'products/level2.1',
-                        label: 'Level 2.1'
-                    },
-                    {
-                        routeLink: 'products/level2.2',
-                        label: 'Level 2.2',
-                        items: [
-                            {
-                                routeLink: 'products/level3.1',
-                                label: 'Level 3.1',
-                            },
-                            {
-                                routeLink: 'products/level3.2',
-                                label: 'Level 3.2',
-                            }
-                        ]
-                    }
-                ]
+                routeLink: 'pharmaceutical-categories',
+                icon: 'fa fa-hourglass-half',
+                label: 'Pharmaceutical Categories'
             },
             {
-                routeLink: 'products/level1.2',
-                label: 'Level 1.2'
+                routeLink: 'pharmaceuticals',
+                icon: 'fa fa-pills',
+                label: 'Pharmaceuticals'
             }
         ]
     },
     {
-        routeLink: 'statistics',
-        icon: 'fa fa-chart-bar',
-        label: 'Statistics'
-    },
-    {
-        routeLink: 'coupens',
-        icon: 'fa fa-tags',
-        label: 'Coupens',
-        items: [
-            {
-                routeLink:  'coupens/list',
-                label: 'List Coupens'
-            },
-            {
-                routeLink:  'coupens/create',
-                label: 'Create Coupens'
-            }
-        ]
-    },
-    {
-        routeLink: 'pages',
-        icon: 'fa fa-file',
-        label: 'Pages'
-    },
-    {
-        routeLink: 'media',
-        icon: 'fa fa-camera',
-        label: 'Media'
+        routeLink: 'vendors',
+        icon: 'fa fa-store',
+        label: 'Vendors'
     },
     {
         routeLink: 'settings',
         icon: 'fa fa-cog',
         label: 'Settings',
-        expanded: true,
         items: [
             {
-                routeLink: 'settings/profile',
-                label: 'Profile'
+                routeLink: 'countries',
+                icon: 'fa fa-globe',
+                label: 'Countries'
             },
             {
-                routeLink: 'settings/customize',
-                label: 'Customize'
+                routeLink: 'provinces',
+                icon: 'fa fa-map-location-dot',
+                label: 'Provinces'
+            },
+            {
+                routeLink: 'cities',
+                icon: 'fa fa-city',
+                label: 'Cities'
+            },
+            {
+                routeLink: 'address-types',
+                icon: 'fa fa-map-pin',
+                label: 'Address Types'
+            },
+            {
+                routeLink: 'hospitals',
+                icon: 'fa fa-circle-h',
+                label: 'Hospitals'
+            },
+            {
+                routeLink: 'ailments',
+                icon: 'fa fa-lungs-virus',
+                label: 'Ailments'
+            },
+            {
+                routeLink: 'roles',
+                icon: 'fa fa-users',
+                label: 'Roles'
+            },
+            {
+                routeLink: 'genders',
+                icon: 'fa fa-venus-mars',
+                label: 'Genders'
+            },
+            {
+                routeLink: 'titles',
+                icon: 'fa fa-graduation-cap',
+                label: 'Titles'
             }
         ]
-    }
+    },
 ];

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SideNavToggle } from './core/sidenav/interfaces/side-nav-toggle';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'hospital-clientApp';
+
+  isSideNavCollapsed = false;
+  screenWidth = 0;
+
+  onToggleSideNav(data: SideNavToggle): void {
+   this.screenWidth = data.screenWidth;
+   this.isSideNavCollapsed = data.collapsed;
+  }
 }

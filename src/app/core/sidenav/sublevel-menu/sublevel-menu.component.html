@@ -9,7 +9,7 @@
         (click)="handleClick(item)"
         [ngClass]="getActiveClass(item)"
       >
-        <i class="sublevel-link-icon fa fa-circle"></i>
+        <i class="sublevel-link-icon" [ngClass]="item.icon ? 'item.icon' : 'fa fa-circle'"></i>
         <span class="sublevel-link-text" @fadeInOut *ngIf="!collapsed">{{item.label}}</span>
         <i class="menu-collapse-icon" *ngIf="item.items && !collapsed"
           [ngClass]="!item.expanded ? 'fa fa-angle-right' : 'fa fa-angle-down'"></i>
@@ -20,7 +20,7 @@
         routerLinkActive="active-sublevel"
         [routerLinkActiveOptions]="{exact: true}"
       >
-        <i class="sublevel-link-icon fa fa-circle"></i>
+        <i class="sublevel-link-icon" [ngClass]="item.icon ? item.icon : 'fa fa-circle'"></i>
         <span class="sublevel-link-text" @fadeInOut *ngIf="!collapsed">{{item.label}}</span>
       </a>
       <div *ngIf="item.items && item.items.length > 0">

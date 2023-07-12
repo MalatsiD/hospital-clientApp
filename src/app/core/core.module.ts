@@ -5,6 +5,8 @@ import { ContentContainerComponent } from './content-container/content-container
 import { TopnavComponent } from './topnav/topnav.component';
 import { RouterModule } from '@angular/router';
 import { SublevelMenuComponent } from './sidenav/sublevel-menu/sublevel-menu.component';
+import { CdkMenuModule } from '@angular/cdk/menu';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 
 
@@ -18,6 +20,8 @@ import { SublevelMenuComponent } from './sidenav/sublevel-menu/sublevel-menu.com
   imports: [
     CommonModule,
     RouterModule,
+    OverlayModule,
+    CdkMenuModule
   ],
   exports: [
     SidenavComponent,
