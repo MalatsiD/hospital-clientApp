@@ -8,7 +8,7 @@ import { SublevelMenuComponent } from './sidenav/sublevel-menu/sublevel-menu.com
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { OverlayModule } from '@angular/cdk/overlay';
 
-
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
     CommonModule,
     RouterModule,
     OverlayModule,
-    CdkMenuModule
+    CdkMenuModule,
+    BreadcrumbModule
   ],
   exports: [
     SidenavComponent,

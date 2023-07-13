@@ -1,0 +1,86 @@
+
+
+:host ::ng-deep {
+
+    .p-breadcrumb {
+        border-radius: 0 !important;
+        border: 0 !important;
+        border-top: 1px solid #dee2e6 !important;
+        padding: 0.6rem !important;
+    
+        ul li a .p-menuitem-text:hover {
+            text-decoration: underline !important;
+        }
+    
+        ul li .p-menuitem-link:focus {
+            box-shadow: none !important;
+            text-decoration: underline !important;
+        }
+    }
+
+    .p-component {
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 14px !important;
+    }
+
+    .p-fieldset {
+        border-radius: 0;
+
+        .p-fieldset-legend {
+            background: #fff !important;
+            padding: 0.5rem 1.25rem !important;
+            font-family: 'Roboto', sans-serif !important;
+            font-size: 20px !important;
+            font-weight: normal !important;
+            border-radius: 0;
+        }
+    }
+
+    .p-toolbar {
+        padding: 0.5rem;
+        border: 0;
+        background: #f4f7fa !important;
+    }
+
+    p-table {
+        .p-datatable-header {
+            border: 0;
+    
+            .table-header {
+                display: flex;
+                justify-content: space-between;
+                padding: 0.5rem;
+            }
+        }
+    
+        .p-datatable-thead tr th {
+            background: #263238 !important;
+            color: #fff !important;
+            padding: 0.5rem 1rem !important;
+    
+            .p-sortable-column-icon {
+                color: #fff !important;
+            }
+    
+            .p-icon {
+                color: #fff !important;
+            }
+    
+            &:hover {
+                background: #1c2429 !important;
+            }
+    
+            .p-column-filter-menu-button:hover {
+                background: #263238 !important;
+            }
+        }
+    
+        .p-paginator {
+            padding: 0.5rem !important;
+            border: 0;
+        }
+    }
+    
+    
+}
+

@@ -54,47 +54,47 @@ export const navbarData: INavbarData[] = [
         label: 'Settings',
         items: [
             {
-                routeLink: 'countries',
+                routeLink: 'settings/countries',
                 icon: 'fa fa-globe',
                 label: 'Countries'
             },
             {
-                routeLink: 'provinces',
+                routeLink: 'settings/provinces',
                 icon: 'fa fa-map-location-dot',
                 label: 'Provinces'
             },
             {
-                routeLink: 'cities',
+                routeLink: 'settings/cities',
                 icon: 'fa fa-city',
                 label: 'Cities'
             },
             {
-                routeLink: 'address-types',
+                routeLink: 'settings/address-types',
                 icon: 'fa fa-map-pin',
                 label: 'Address Types'
             },
             {
-                routeLink: 'hospitals',
+                routeLink: 'settings/hospitals',
                 icon: 'fa fa-circle-h',
                 label: 'Hospitals'
             },
             {
-                routeLink: 'ailments',
+                routeLink: 'settings/ailments',
                 icon: 'fa fa-lungs-virus',
                 label: 'Ailments'
             },
             {
-                routeLink: 'roles',
+                routeLink: 'settings/roles',
                 icon: 'fa fa-users',
                 label: 'Roles'
             },
             {
-                routeLink: 'genders',
+                routeLink: 'settings/genders',
                 icon: 'fa fa-venus-mars',
                 label: 'Genders'
             },
             {
-                routeLink: 'titles',
+                routeLink: 'settings/titles',
                 icon: 'fa fa-graduation-cap',
                 label: 'Titles'
             }

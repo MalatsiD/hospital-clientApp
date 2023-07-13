@@ -1,4 +1,4 @@
-@import 'variables';
+@import 'core-variables';
 
 .body {
     width: calc($full-perc - $sidenav-collapsed-width);
@@ -9,7 +9,7 @@
     top: $zero-space;
     transition: $transition-all-5-ease;
     background: $color-light-1;
-    padding: $rem-3;
+    padding: $rem-3 $rem-1-563;
 }
 
 .body-trimmed {

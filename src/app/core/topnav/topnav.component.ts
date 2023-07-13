@@ -1,6 +1,8 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { languages, notifications, userItems } from './header-dummy-data';
 
+import { MenuItem } from 'primeng/api';
+
 @Component({
   selector: 'app-topnav',
   templateUrl: './topnav.component.html',
@@ -18,6 +20,10 @@ export class TopnavComponent {
   notifications = notifications;
   userItems = userItems;
 
+  items: MenuItem[] | undefined;
+
+    home: MenuItem | undefined;
+
   constructor() {}
 
   @HostListener('window:resize', ['$event'])
@@ -28,6 +34,11 @@ export class TopnavComponent {
   ngOnInit(): void {
     this.checkCanShowSearchAsOverlay(window.innerWidth);
     this.selectedLanguage = this.languages[0];
+
+
+    this.items = [{ label: 'Computer' }, { label: 'Notebook' }, { label: 'Accessories' }, { label: 'Backpacks' }, { label: 'Item' }];
+
+    this.home = { icon: 'fa fa-home', routerLink: '/' };
   }
 
   getHeadClass(): string {
