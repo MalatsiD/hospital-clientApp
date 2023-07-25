@@ -2,6 +2,10 @@
 
 :host ::ng-deep {
 
+    .p-toast {
+        top: 5rem !important;
+    }
+
     .p-breadcrumb {
         border-radius: 0 !important;
         border: 0 !important;
@@ -43,13 +47,22 @@
     }
 
     p-table {
+
         .p-datatable-header {
             border: 0;
+            padding: 0.5rem 0;
     
             .table-header {
                 display: flex;
                 justify-content: space-between;
                 padding: 0.5rem;
+                background-color: #fff;
+            }
+        }
+
+        .p-sortable-column {
+            &:focus {
+                box-shadow: none !important;
             }
         }
     
@@ -74,11 +87,27 @@
                 background: #263238 !important;
             }
         }
+
+        .p-datatable-tbody tr td {
+            padding: 0.5rem 1rem !important;
+
+            .p-button.p-button-icon-only.p-button-rounded {
+                height: 2rem;
+            }
+
+            .p-button.p-button-icon-only {
+                width: 2rem;
+            }
+        }
     
         .p-paginator {
             padding: 0.5rem !important;
             border: 0;
         }
+    }
+
+    .p-paginator {
+        border-radius: 0 !important;
     }
     
     

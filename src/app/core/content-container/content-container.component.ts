@@ -18,8 +18,6 @@ export class ContentContainerComponent {
       styleClass = 'body-md-screen';
     }
 
-    console.log('Class Called: ', styleClass, this.collapsed);
-
     return styleClass;
   }
 }

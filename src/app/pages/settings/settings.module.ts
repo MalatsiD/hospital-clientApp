@@ -6,12 +6,7 @@ import { CountriesComponent } from './countries/countries.component';
 import { ProvincesComponent } from './provinces/provinces.component';
 import { CitiesComponent } from './cities/cities.component';
 
-import { ButtonModule } from 'primeng/button';
-import { FieldsetModule } from 'primeng/fieldset';
-import { ToastModule } from 'primeng/toast';
-import { ToolbarModule } from 'primeng/toolbar';
-import { TableModule } from 'primeng/table';
-import { InputTextModule } from 'primeng/inputtext';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -23,12 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
   imports: [
     CommonModule,
     SettingsRoutingModule,
-    ButtonModule,
-    FieldsetModule,
-    ToastModule,
-    ToolbarModule,
-    TableModule,
-    InputTextModule
+    SharedModule
   ]
 })
 export class SettingsModule { }

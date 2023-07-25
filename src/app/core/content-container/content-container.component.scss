@@ -2,7 +2,7 @@
 
 .body {
     width: calc($full-perc - $sidenav-collapsed-width);
-    margin-top: $rem-5-75;
+    margin-top: 3.5rem;
     margin-left: $sidenav-collapsed-width;
     z-index: $zero-space;
     position: relative;
