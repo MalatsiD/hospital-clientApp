@@ -1,3 +1,4 @@
+import { OnDestroy } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { DataService } from './../../../shared/services/data.service';
 import { StatusChange } from './../../../shared/interfaces/status-change';
@@ -9,21 +10,20 @@ import { CountryService } from 'src/app/services/country.service';
 import { CountryView, CountryViewList } from 'src/app/shared/interfaces/countryView';
 
 import {cloneDeep} from 'lodash';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, Subscription, takeUntil } from 'rxjs';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { CountryFormComponent } from './country-form/country-form.component';
+import { Location } from '@angular/common';
 
-interface PageEvent {
-  first: number;
-  rows: number;
-  page: number;
-  pageCount: number;
-}
 
 @Component({
   selector: 'app-countries',
   templateUrl: './countries.component.html',
   styleUrls: ['./countries.component.scss'],
-  providers: []
+  providers: [DialogService]
 })
-export class CountriesComponent implements OnInit {
+export class CountriesComponent implements OnInit, OnDestroy {
 
   countryViewList: CountryViewList = [];
   paginationValues: number[] = [];
@@ -36,34 +36,69 @@ export class CountriesComponent implements OnInit {
   inputSearch: string = '';
   inputChangeHasLoaded: boolean = true;
   tableIsLoading: boolean = false;
+  isLoading: boolean = true;
 
   confirmDialogHeader: string = '';
+
+  destroy = new Subject<any>();
+
+  ref: DynamicDialogRef | undefined;
+
+  fakeData: any[] = [];
+  fakeColumns: string[] = [];
+
+  countryChangeSubscription = new Subscription();
 
   constructor(
     private countryService: CountryService, 
     private sharedService: SharedService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private router: Router,
+    private dataService: DataService
     ) {}
 
   ngOnInit(): void {
+    this.loadSkeleton();
     this.loadCountries();
+    this.detectCountryDataChanges();
     this.paginationValues = this.sharedService.getTablePaginatorValues();
+  }
+
+  loadSkeleton(): void {
+    this.fakeData = Array.from({ length: 5 }).map((_, i) => `Item #${i}`);
+    this.fakeColumns = ['Name', 'Code', 'Description', 'Status', ''];
+  }
+
+  detectCountryDataChanges(): void {
+    this.countryChangeSubscription = this.dataService.getCountrySingleData().subscribe({
+      next: (result) => {
+        if (result) {
+          this.tableIsLoading = true;
+          this.loadCountries();
+        }
+      }
+    });
   }
 
   loadCountries(): void {
     this.loadParams();
-    this.countryService.getCountryList(this.filterParams).subscribe({
+    this.countryService.getCountryTableList(this.filterParams).subscribe({
       next: (result) => {
         if(result.isSuccessful) {
           this.countryViewList = result.response;
           this.totalRecords = result.totalRecords;
 
+          this.isLoading = false;
           this.tableIsLoading = false;
         }  else {
+          this.isLoading = false;
+          this.tableIsLoading = false;
           this.sharedService.showErrorMessage(result.errorMessage);
         }
       },
       error: (error) => {
+        this.isLoading = false;
+        this.tableIsLoading = false;
         console.log(error);
       }
     })
@@ -94,8 +129,17 @@ export class CountriesComponent implements OnInit {
 
   }
 
+  goToAddCountry(): void {
+    this.router.navigate(['settings/countries', {outlets: {modal: 'form/new'}}]);
+  }
+
+  refreshData(): void {
+    this.tableIsLoading = true;
+    this.loadCountries();
+  }
+
   goToEditCountry(country: CountryView): void {
-    console.log('Edit: ', country);
+    this.router.navigate(['settings/countries', {outlets: {modal: 'form/edit/' + country.id}}]);
   }
 
   deleteCountry(country: CountryView): void {
@@ -165,6 +209,10 @@ export class CountriesComponent implements OnInit {
       { paramName: 'CurrentPage', paramValue: this.currentPage},
       { paramName: 'PageSize', paramValue: this.pageSize}
     );
+  }
+
+  ngOnDestroy(): void {
+    this.countryChangeSubscription.unsubscribe();
   }
 
 }

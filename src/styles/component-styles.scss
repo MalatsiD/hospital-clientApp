@@ -6,6 +6,34 @@
         top: 5rem !important;
     }
 
+    .p-progressbar {
+        height: 0.3rem !important;
+    }
+
+    .p-card {
+        border-radius: 0rem !important;
+    }
+
+    p-messages {
+        .p-message {
+            justify-content: center !important;
+            .p-message-wrapper {
+                padding: 0.5rem !important;
+            }
+
+            .p-icon {
+                width: 1rem !important;
+                height: 1rem !important;
+            }
+
+            .p-message-close {
+                width: 1rem !important;
+                height: 1rem !important;
+                margin-right: 0.5rem !important;
+            }
+        }
+    }
+
     .p-breadcrumb {
         border-radius: 0 !important;
         border: 0 !important;

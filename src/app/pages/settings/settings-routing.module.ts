@@ -1,21 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CountriesComponent } from './countries/countries.component';
-import { ProvincesComponent } from './provinces/provinces.component';
-import { CitiesComponent } from './cities/cities.component';
 
 const routes: Routes = [
   {
     path: 'countries',
-    component: CountriesComponent
+    loadChildren: () => import('./countries/countries.module').then(m => m.CountriesModule)
   },
   {
     path: 'provinces',
-    component: ProvincesComponent
+    loadChildren: () => import('./provinces/provinces.module').then(m => m.ProvincesModule)
   },
   {
     path: 'cities',
-    component: CitiesComponent
+    loadChildren: () => import('./cities/cities.module').then(m => m.CitiesModule)
   }
 ];
 

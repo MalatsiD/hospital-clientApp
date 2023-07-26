@@ -1,4 +1,7 @@
-<div>
+<div *ngIf="isLoading">
+    <app-basic-view-skeleton [fakeData]="fakeData" [tableColumns]="fakeColumns"></app-basic-view-skeleton>
+</div>
+<div *ngIf="!isLoading">
     <p-toast ></p-toast>
     <p-table
         #countriesDt
@@ -12,8 +15,9 @@
         <ng-template pTemplate="caption">
             <div class="table-header">
                 <div>
-                    <button pButton pRipple label="New" icon="fa fa-plus" class="p-button-success mr-2"></button>
-                    <button pButton pRipple label="Export" icon="fa fa-upload" class="p-button-help"></button>
+                    <button pButton pRipple label="New" icon="fa fa-plus" class="p-button-success mr-2" (click)="goToAddCountry()"></button>
+                    <button pButton pRipple label="Refresh" icon="fa fa-refresh" class="p-button-secondary mr-2" (click)="refreshData()"></button>
+                    <button pButton pRipple label="Export" icon="fa fa-upload" class="p-button-info"></button>
                 </div>  
                 <span class="p-input-icon-left">
                     <i class="fa fa-search"></i>
@@ -61,7 +65,7 @@
                 </td>
                 <td>
                     <div class="flex align-items-center justify-content-center gap-2">
-                        <button  
+                        <button
                             pButton pRipple 
                             type="button" 
                             icon="fa fa-pencil" 
@@ -81,12 +85,14 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="8">Countries found</td>
+                <td colspan="8">Countries not found</td>
             </tr>
         </ng-template>
     </p-table>
     <p-paginator  [totalRecords]="totalRecords" (onPageChange)="onPageChange($event)" [first]="0" [rows]="pageSize" [rowsPerPageOptions]="paginationValues"></p-paginator>
 </div>
+
+<router-outlet name="modal"></router-outlet>
 
 <p-confirmDialog #cd [style]="{width: '30vw'}">
     <ng-template pTemplate="header">

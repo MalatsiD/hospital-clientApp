@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { CleanUrlSerializer } from './clean-url-serializer';
+import { UrlSerializer } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     AppRoutingModule,
     CoreModule
   ],
-  providers: [MessageService, ConfirmationService],
+  providers: [
+    MessageService, 
+    ConfirmationService,
+    // {provide: UrlSerializer, useClass: CleanUrlSerializer}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

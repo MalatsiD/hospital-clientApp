@@ -30,7 +30,7 @@ export class SharedService {
   setParams(paramsList: FilterParamList): HttpParams {
     let params = new HttpParams();
 
-    for(let i = 0; i < paramsList.length; i++) {
+    for(let i = 0; i < paramsList?.length; i++) {
       params = params.set(paramsList[i].paramName, paramsList[i].paramValue);
     }
 

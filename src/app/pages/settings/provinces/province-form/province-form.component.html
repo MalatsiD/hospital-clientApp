@@ -1,0 +1,69 @@
+<p-messages></p-messages>
+<p-progressBar class="m-2" mode="indeterminate" *ngIf="isLoading"></p-progressBar>
+<form [formGroup]="provinceForm" (ngSubmit)="submitData()">
+    <div class="formgrid grid">
+        <div class="field col-12 md:col-4"
+        >
+            <label for="name">Name *</label>
+            <input
+                pInputText
+                class="text-base text-color surface-overlay p-2 border-1 border-solid border-round appearance-none outline-none focus:border-primary w-full" 
+                id="name" 
+                type="text"
+                formControlName="name"
+            >
+            <small class="p-error block" *ngIf="provinceForm.get('name')?.invalid && provinceForm.get('name')?.dirty">Name is required</small>
+        </div>
+        <div class="field col-12 md:col-4">
+            <label for="code">Code *</label>
+            <input 
+                pInputText
+                class="text-base text-color surface-overlay p-2 border-1 border-solid border-round appearance-none outline-none focus:border-primary w-full"
+                id="code" 
+                type="text" 
+                formControlName="code"
+            >
+            <small class="p-error block" *ngIf="provinceForm.get('code')?.invalid && provinceForm.get('code')?.dirty">Code is required</small>
+        </div>
+        <div class="field col-12 md:col-4">
+            <label for="country">Country *</label>
+            <select 
+                class="w-full text-base text-color surface-overlay p-2 border-1 border-solid border-round outline-none focus:border-primary"
+                id="country"
+                formControlName="countryId"
+            >
+                <!-- <option class="text-gray-800" value="0">--Select Country--</option> -->
+                <option *ngFor="let country of countryList" [ngValue]="country.id">
+                    {{country.name}}
+                </option>
+            </select>
+            <small class="p-error block" *ngIf="provinceForm.get('countryId')?.invalid && provinceForm.get('countryId')?.dirty">Country is required</small>
+        </div>
+        <div class="field col-12">
+            <label for="description">Description</label>
+            <textarea 
+                pInputTextarea
+                class="text-base text-color surface-overlay p-2 border-1 border-solid border-round appearance-none outline-none focus:border-primary w-full"
+                id="description" 
+                type="text" rows="4" 
+                formControlName="description"
+                ></textarea>
+        </div>
+    </div>
+    <div class="flex justify-content-end flex-wrap">
+        <button 
+            pButton 
+            pRipple 
+            type="submit" 
+            label="Submit" 
+            class="p-button-success m-2"
+            [disabled]="provinceForm.invalid || isLoading"
+        ></button>
+        <!-- <button 
+            pButton 
+            pRipple 
+            label="Cancel" 
+            class="p-button-danger m-2"
+        ></button> -->
+    </div>
+</form>
