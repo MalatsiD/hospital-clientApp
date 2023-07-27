@@ -18,11 +18,9 @@
         </ng-template>
         <ng-template pTemplate="body" let-product>
             <tr>
-                <td><p-skeleton height="1.5rem"></p-skeleton></td>
-                <td><p-skeleton height="1.5rem"></p-skeleton></td>
-                <td><p-skeleton height="1.5rem"></p-skeleton></td>
-                <td><p-skeleton height="1.5rem"></p-skeleton></td>
-                <td><p-skeleton height="1.5rem"></p-skeleton></td>
+                <td *ngFor="let item of tableColumns">
+                    <p-skeleton height="1.5rem"></p-skeleton>
+                </td>
             </tr>
         </ng-template>
     </p-table>

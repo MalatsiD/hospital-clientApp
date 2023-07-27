@@ -66,7 +66,6 @@ export class ProvincesComponent implements OnInit, OnDestroy {
     this.provinceListSubscription = this.dataService.getProvinceSingleData().subscribe({
       next: (result) => {
         if (result) {
-          this.tableIsLoading = true;
           this.loadProvinces();
         }
       }

@@ -1,26 +1,24 @@
-import { OnDestroy } from '@angular/core';
 import { StatusChange } from './../../../shared/interfaces/status-change';
-import { CityView } from './../../../shared/interfaces/cityView';
-import { CityService } from './../../../services/city.service';
+import { OnDestroy } from '@angular/core';
 import { DataService } from './../../../shared/services/data.service';
 import { SharedService } from './../../../shared/services/shared.service';
+import { AddressTypeService } from './../../../services/address-type.service';
 import { FilterParamList } from './../../../shared/interfaces/filter-params';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CityViewList } from 'src/app/shared/interfaces/cityView';
+import { AddressTypeView, AddressTypeViewList } from 'src/app/shared/interfaces/addressTypeView';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-cities',
-  templateUrl: './cities.component.html',
-  styleUrls: ['./cities.component.scss']
+  selector: 'app-address-types',
+  templateUrl: './address-types.component.html',
+  styleUrls: ['./address-types.component.scss']
 })
-export class CitiesComponent implements OnInit, OnDestroy {
-
+export class AddressTypesComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   tableIsLoading: boolean = false;
-  citiesList: CityViewList = [];
+  addressTypesList: AddressTypeViewList = [];
 
   paginationValues: number[] = [];
   filterParams: FilterParamList = [];
@@ -34,57 +32,56 @@ export class CitiesComponent implements OnInit, OnDestroy {
   inputSearch: string = '';
   inputChangeHasLoaded: boolean = true;
 
-  cityListSubscription = new Subscription();
+  addressTypeListSubscription = new Subscription();
 
   fakeData: any[] = [];
   fakeColumns: string[] = [];
 
   constructor(
-    private cityService: CityService,
+    private addressTypeService: AddressTypeService,
     private sharedService: SharedService,
     private confirmationService: ConfirmationService,
     private router: Router,
     private dataService: DataService
   ) {}
-  
 
   ngOnInit(): void {
     this.loadSkeleton();
-    this.loadCities();
-    this.detectCityDataChanges();
+    this.loadAddressTypes();
+    this.detectAddressTypeDataChanges();
     this.paginationValues = this.sharedService.getTablePaginatorValues();
   }
 
   loadSkeleton(): void {
     this.fakeData = Array.from({ length: 5 }).map((_, i) => `Item #${i}`);
-    this.fakeColumns = ['Name', 'Description', 'Province', 'Status', ''];
+    this.fakeColumns = ['Name', 'Description', 'Status', ''];
   }
 
   refreshData(): void {
     this.isLoading = true;
-    this.loadCities();
+    this.loadAddressTypes();
   }
 
-  detectCityDataChanges(): void {
-    this.cityListSubscription = this.dataService.getCitySingleData().subscribe({
+  detectAddressTypeDataChanges(): void {
+    this.addressTypeListSubscription = this.dataService.getAddressTypeSingleData().subscribe({
       next: (result) => {
         if (result) {
-          this.loadCities();
+          this.loadAddressTypes();
         }
       }
     });
   }
 
-  loadCities(): void {
+  loadAddressTypes(): void {
     this.loadParams();
-    this.cityService.getCitiesTableList(this.filterParams).subscribe({
+    this.addressTypeService.getAddressTypesTableList(this.filterParams).subscribe({
       next: (result) => {
         if(result.isSuccessful) {
           this.isLoading = false;
           this.tableIsLoading = false;
 
           this.totalRecords = result.totalRecords;
-          this.citiesList = result.response;
+          this.addressTypesList = result.response;
         }
       },
       error: (err) => {
@@ -95,25 +92,25 @@ export class CitiesComponent implements OnInit, OnDestroy {
     });
   }
 
-  goToAddCity(): void {
-    this.router.navigate(['settings/cities', {outlets: {modal: 'form/new'}}]);
+  goToAddAddressType(): void {
+    this.router.navigate(['settings/address-types', {outlets: {modal: 'form/new'}}]);
   }
 
   getStatusClass(status: boolean): string {
     return status ? 'success' : 'danger';
   }
 
-  changeCityStatus(city: CityView): void {
-    const statusChange: StatusChange = { active: !city.active };
+  changeAddressTypeStatus(addressType: AddressTypeView): void {
+    const statusChange: StatusChange = { active: !addressType.active };
     this.confirmDialogHeader = 'Status Change';
 
     this.confirmationService.confirm({
-      message: `You want to ${city.active ? 'Deactivate' : 'Activate'} ${city.name}?`,
+      message: `You want to ${addressType.active ? 'Deactivate' : 'Activate'} ${addressType.name}?`,
       icon: 'fa fa-triangle-exclamation',
       accept: () => {
-        this.cityService.changeCityStatus(statusChange, city.id).subscribe({
+        this.addressTypeService.changeAddressTypeStatus(statusChange, addressType.id).subscribe({
           next: (result) => {
-            this.cityChangesResponse(city.name, result.isSuccessful, result.errorMessage, 'successfully updated');
+            this.addressTypeChangesResponse(addressType.name, result.isSuccessful, result.errorMessage, 'successfully updated');
           },
           error: (error) => {
             console.log(error);
@@ -123,30 +120,30 @@ export class CitiesComponent implements OnInit, OnDestroy {
     });
   }
 
-  cityChangesResponse(name: string, isSuccessful: boolean, errorMessage: string, msg: string): void {
+  addressTypeChangesResponse(name: string, isSuccessful: boolean, errorMessage: string, msg: string): void {
     if(isSuccessful) {
       this.sharedService.showSuccessMessage(`${name} ${msg}!`);
       this.tableIsLoading = true;
-      this.loadCities();
+      this.loadAddressTypes();
     } else {
       this.sharedService.showErrorMessage(errorMessage);
     }
   }
 
-  goToEditCity(city: CityView): void {
-    this.router.navigate(['settings/cities', {outlets: {modal: 'form/edit/' + city.id}}]);
+  goToEditAddressTypes(addressType: AddressTypeView): void {
+    this.router.navigate(['settings/address-types', {outlets: {modal: 'form/edit/' + addressType.id}}]);
   }
 
-  deleteCity(city: CityView): void {
+  deleteAddressType(addressType: AddressTypeView): void {
     this.confirmDialogHeader = 'Delete'; 
 
     this.confirmationService.confirm({
-      message: `You want to delete ${city.name}?`,
+      message: `You want to delete ${addressType.name}?`,
       icon: 'fa fa-triangle-exclamation',
       accept: () => {
-        this.cityService.deleteCity(city.id).subscribe({
+        this.addressTypeService.deleteAddressType(addressType.id).subscribe({
           next: (result) => {
-            this.cityChangesResponse(city.name, result.isSuccessful, result.errorMessage, 'successfully deleted');
+            this.addressTypeChangesResponse(addressType.name, result.isSuccessful, result.errorMessage, 'successfully deleted');
           },
           error: (error) => {
             console.log(error);
@@ -161,7 +158,7 @@ export class CitiesComponent implements OnInit, OnDestroy {
     this.pageSize = event.rows;
 
     this.tableIsLoading = true;
-    this.loadCities();
+    this.loadAddressTypes();
   }
 
   searchData(event: any): void {
@@ -170,14 +167,14 @@ export class CitiesComponent implements OnInit, OnDestroy {
       this.inputChangeHasLoaded = false;
 
       this.tableIsLoading = true;
-      this.loadCities();
+      this.loadAddressTypes();
     } else {
       if (!this.inputChangeHasLoaded) {
         this.inputSearch = '';
         this.inputChangeHasLoaded = true;
 
         this.tableIsLoading = true;
-        this.loadCities();
+        this.loadAddressTypes();
       }
     }
   }
@@ -187,7 +184,6 @@ export class CitiesComponent implements OnInit, OnDestroy {
     if (this.inputSearch != '' && this.inputSearch != null) {
       this.filterParams.push(
         { paramName: 'Name', paramValue: this.inputSearch},
-        { paramName: 'ProvinceName', paramValue: this.inputSearch}
       );
     }
     this.filterParams.push(
@@ -197,7 +193,7 @@ export class CitiesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.cityListSubscription.unsubscribe();
+    this.addressTypeListSubscription.unsubscribe();
   }
 
 }

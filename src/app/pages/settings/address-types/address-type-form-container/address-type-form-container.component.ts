@@ -1,17 +1,16 @@
-import { OnDestroy, OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
-import { CityFormComponent } from '../city-form/city-form.component';
+import { AddressTypeFormComponent } from '../address-type-form/address-type-form.component';
 
 @Component({
-  selector: 'app-city-form-container',
+  selector: 'app-address-type-form-container',
   template: '',
   providers: [DialogService]
 })
-export class CityFormContainerComponent implements OnInit, OnDestroy {
-  
+export class AddressTypeFormContainerComponent implements OnInit, OnDestroy {
     destroy = new Subject<any>();
 
     ref: DynamicDialogRef | undefined;
@@ -30,8 +29,8 @@ export class CityFormContainerComponent implements OnInit, OnDestroy {
     showDialog(): void {
         this.route.params.pipe(takeUntil(this.destroy)).subscribe({
             next: (params) => {
-                this.ref = this.dialogService.open(CityFormComponent, {
-                    header: params['id'] ? 'Edit City' : 'Add City',
+                this.ref = this.dialogService.open(AddressTypeFormComponent, {
+                    header: params['id'] ? 'Edit Address Type' : 'Add Address Type',
                     width: '70%',
                     contentStyle: { overflow: 'auto' },
                     baseZIndex: 10000,
@@ -47,7 +46,7 @@ export class CityFormContainerComponent implements OnInit, OnDestroy {
         if(this.ref) {
             this.ref.onClose.subscribe({
                 next: () => {
-                    this.router.navigate(['settings/cities', {outlets: {modal: null}}]);
+                    this.router.navigate(['settings/address-types', {outlets: {modal: null}}]);
                 }
             })
         }
@@ -59,4 +58,5 @@ export class CityFormContainerComponent implements OnInit, OnDestroy {
             this.ref.close();
         }
     }
+
 }

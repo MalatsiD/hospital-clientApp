@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'cities',
     loadChildren: () => import('./cities/cities.module').then(m => m.CitiesModule)
+  },
+  {
+    path: 'address-types',
+    loadChildren: () => import('./address-types/address-types.module').then(m => m.AddressTypesModule)
   }
 ];
 

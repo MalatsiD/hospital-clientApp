@@ -73,7 +73,6 @@ export class CountriesComponent implements OnInit, OnDestroy {
     this.countryChangeSubscription = this.dataService.getCountrySingleData().subscribe({
       next: (result) => {
         if (result) {
-          this.tableIsLoading = true;
           this.loadCountries();
         }
       }

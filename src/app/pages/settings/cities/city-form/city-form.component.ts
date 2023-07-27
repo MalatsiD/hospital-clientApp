@@ -60,7 +60,7 @@ export class CityFormComponent implements OnInit {
       error: (err) => {
         console.log(err);
       }
-    })
+    });
   }
 
   loadCityDetails(): void {

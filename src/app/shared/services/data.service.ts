@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { CountryView } from '../interfaces/countryView';
 import { ProvinceView } from '../interfaces/provinceView';
 import { CityView } from '../interfaces/cityView';
+import { AddressTypeView } from '../interfaces/addressTypeView';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,9 @@ export class DataService {
 
   city: CityView = {} as CityView;
   private citySingleData = new BehaviorSubject<CityView>(this.city);
+
+  addressType: AddressTypeView = {} as CityView;
+  private addressTypeingleData = new BehaviorSubject<AddressTypeView>(this.addressType);
 
   constructor() { }
 
@@ -42,5 +46,13 @@ export class DataService {
 
   getCitySingleData(): Observable<CityView> {
     return this.citySingleData.asObservable();
+  }
+
+  updateAddressTypeSingleData(data: AddressTypeView): void {
+    this.addressTypeingleData.next(data);
+  }
+
+  getAddressTypeSingleData(): Observable<AddressTypeView> {
+    return this.addressTypeingleData.asObservable();
   }
 }
