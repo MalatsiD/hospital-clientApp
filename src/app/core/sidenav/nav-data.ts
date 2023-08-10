@@ -32,12 +32,12 @@ export const navbarData: INavbarData[] = [
         label: 'Pharmacy',
         items: [
             {
-                routeLink: 'pharmaceutical-categories',
+                routeLink: 'pharmacy/pharmaceutical-categories',
                 icon: 'fa fa-hourglass-half',
                 label: 'Pharmaceutical Categories'
             },
             {
-                routeLink: 'pharmaceuticals',
+                routeLink: 'pharmacy/pharmaceuticals',
                 icon: 'fa fa-pills',
                 label: 'Pharmaceuticals'
             }
