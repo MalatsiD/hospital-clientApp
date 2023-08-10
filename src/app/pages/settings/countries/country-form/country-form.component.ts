@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CountryDto } from 'src/app/shared/dtos/country-dto';
 import { result } from 'lodash';
 import { MessageService } from 'primeng/api';
+import { ApiResponse } from 'src/app/shared/interfaces/api-response';
 
 @Component({
   selector: 'app-country-form',
@@ -81,14 +82,16 @@ export class CountryFormComponent implements OnInit {
       this.counrtyService.updateCountry(country, this.countryEditId).subscribe({
         next: (result) => {
           if(result.isSuccessful) {
-            this.isLoading = false;
             this.messageService.add({severity:'success', summary:'Successfully', detail:`updated ${result.response.name}`});
             this.dataService.updateCountrySingleData(result.response);
           }
+
+          this.isLoading = false;
         },
         error: (err) => {
           this.isLoading = false;
-          this.messageService.add({severity:'error', summary:'Error', detail: err});
+          const errorResult = err.error as ApiResponse;
+          this.messageService.add({severity:'error', summary:'Error', detail: errorResult.errorMessage});
         }
       })
     } else {
@@ -96,16 +99,17 @@ export class CountryFormComponent implements OnInit {
       this.counrtyService.addCountry(country).subscribe({
         next: (result) => {
           if(result.isSuccessful) {
-            this.isLoading = false;
             this.messageService.add({severity:'success', summary:'Successfully', detail:`added ${result.response.name}`});
             this.dataService.updateCountrySingleData(result.response);
             this.loadForm();
           }
+
+          this.isLoading = false;
         },
         error: (err) => {
           this.isLoading = false;
-          console.log(err)
-          this.messageService.add({severity:'error', summary:'Error', detail: err});
+          const errorResult = err.error as ApiResponse;
+          this.messageService.add({severity:'error', summary:'Error', detail: errorResult.errorMessage});
         }
       });
     }

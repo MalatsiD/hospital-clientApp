@@ -15,6 +15,7 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CountryFormComponent } from './country-form/country-form.component';
 import { Location } from '@angular/common';
+import { ApiResponse } from 'src/app/shared/interfaces/api-response';
 
 
 @Component({
@@ -92,13 +93,14 @@ export class CountriesComponent implements OnInit, OnDestroy {
         }  else {
           this.isLoading = false;
           this.tableIsLoading = false;
-          this.sharedService.showErrorMessage(result.errorMessage);
+          this.sharedService.showInformationMessage(result.errorMessage);
         }
       },
-      error: (error) => {
+      error: (err) => {
         this.isLoading = false;
         this.tableIsLoading = false;
-        console.log(error);
+        const errorResult = err.error as ApiResponse;
+        this.sharedService.showErrorMessage(errorResult.errorMessage);
       }
     })
   }
@@ -119,8 +121,9 @@ export class CountriesComponent implements OnInit, OnDestroy {
           next: (result) => {
             this.countryChangesResponse(country.name, result.isSuccessful, result.errorMessage, 'successfully updated');
           },
-          error: (error) => {
-            console.log(error);
+          error: (err) => {
+            const errorResult = err.error as ApiResponse;
+            this.sharedService.showErrorMessage(errorResult.errorMessage);
           }
         });
       }
@@ -152,8 +155,9 @@ export class CountriesComponent implements OnInit, OnDestroy {
           next: (result) => {
             this.countryChangesResponse(country.name, result.isSuccessful, result.errorMessage, 'successfully deleted');
           },
-          error: (error) => {
-            console.log(error);
+          error: (err) => {
+            const errorResult = err.error as ApiResponse;
+            this.sharedService.showErrorMessage(errorResult.errorMessage);
           }
         })
       }

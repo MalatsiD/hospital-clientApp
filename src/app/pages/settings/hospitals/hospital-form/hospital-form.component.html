@@ -1,0 +1,201 @@
+<p-messages></p-messages>
+<p-progressBar class="m-2" mode="indeterminate" *ngIf="isLoading"></p-progressBar>
+<form [formGroup]="hospitalForm" (ngSubmit)="submitData()">
+    <div class="formgrid grid">
+        <div class="field col-12 md:col-6">
+            <label for="name">Name *</label>
+            <input
+                pInputText
+                class="text-base text-color surface-overlay p-2 border-1 border-solid border-round appearance-none outline-none focus:border-primary w-full" 
+                id="name" 
+                type="text"
+                formControlName="name"
+            >
+            <small class="p-error block" *ngIf="hospitalForm.get('name')?.invalid && hospitalForm.get('name')?.dirty">Name is required</small>
+        </div>
+        <div class="field col-12 md:col-6">
+            <label for="code">Registration Number*</label>
+            <input 
+                pInputText
+                class="text-base text-color surface-overlay p-2 border-1 border-solid border-round appearance-none outline-none focus:border-primary w-full"
+                id="registrationNumber" 
+                type="text" 
+                formControlName="registrationNumber"
+            >
+            <small class="p-error block" *ngIf="hospitalForm.get('registrationNumber')?.invalid && hospitalForm.get('registrationNumber')?.dirty">Registration Number is required</small>
+        </div>
+        <div class="field col-12 md:col-6">
+            <label for="code">Phone Number *</label>
+            <input 
+                pInputText
+                class="text-base text-color surface-overlay p-2 border-1 border-solid border-round appearance-none outline-none focus:border-primary w-full"
+                id="phoneNumber" 
+                type="text" 
+                formControlName="phoneNumber"
+            >
+            <small class="p-error block" *ngIf="hospitalForm.get('phoneNumber')?.invalid && hospitalForm.get('phoneNumber')?.dirty">Phone Number is required</small>
+        </div>
+        <div class="field col-12 md:col-6">
+            <label for="code">Email *</label>
+            <input 
+                pInputText
+                class="text-base text-color surface-overlay p-2 border-1 border-solid border-round appearance-none outline-none focus:border-primary w-full"
+                id="email" 
+                type="text" 
+                formControlName="email"
+            >
+            <small class="p-error block" *ngIf="hospitalForm.get('email')?.invalid && hospitalForm.get('email')?.dirty">Email is required</small>
+        </div>
+    </div>
+
+    <ng-container formGroupName="residentialAddress">
+        <h4 class="mb-2">Residential Address</h4>
+        <div class="formgrid grid">
+            <div class="field col-12 md:col-9">
+                <label for="addressDetail">Address *</label>
+                <input
+                    pInputText
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid border-round appearance-none outline-none focus:border-primary w-full" 
+                    id="addressDetail1" 
+                    type="text"
+                    formControlName="addressDetail"
+                >
+                <small class="p-error block" *ngIf="hospitalForm.get('residentialAddress')?.get('addressDetail')?.invalid && hospitalForm.get('residentialAddress')?.get('addressDetail')?.dirty">Address is required</small>
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="country">Country</label>
+                <select 
+                    class="w-full text-base text-color surface-overlay p-2 border-1 border-solid border-round outline-none focus:border-primary"
+                    id="country1"
+                    formControlName="countryId"
+                >
+                    <option [value]="country.id" *ngFor="let country of countryList">
+                        {{country.name}}
+                    </option>
+                </select>
+
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="province">Province</label>
+                <select 
+                    class="w-full text-base text-color surface-overlay p-2 border-1 border-solid border-round outline-none focus:border-primary"
+                    id="province1"
+                    formControlName="provinceId"
+                >
+                    <option value="">--Select Province--</option>
+                    <option [value]="province.id" *ngFor="let province of provinceResidentialList">{{province.name}}</option>
+                </select>
+
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="city">City *</label>
+                <select 
+                    class="w-full text-base text-color surface-overlay p-2 border-1 border-solid border-round outline-none focus:border-primary"
+                    id="city1"
+                    formControlName="cityId"
+                >
+                    <option value="0">--Select City--</option>
+                    <option [value]="city.id" *ngFor="let city of cityResidentialList">{{city.name}}</option>
+                </select>
+                <small class="p-error block" *ngIf="hospitalForm.get('residentialAddress')?.get('cityId')?.invalid && hospitalForm.get('residentialAddress')?.get('cityId')?.dirty">City is required</small>
+            </div>
+            <div class="field col-12 md:col-2">
+                <label for="zipCode">Code *</label>
+                <input
+                    pInputText
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid border-round appearance-none outline-none focus:border-primary w-full" 
+                    id="zipCode1" 
+                    type="text"
+                    formControlName="zipCode"
+                >
+                <small class="p-error block" *ngIf="hospitalForm.get('residentialAddress')?.get('zipCode')?.invalid && hospitalForm.get('residentialAddress')?.get('zipCode')?.dirty">Code is required</small>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container formGroupName="postalAddress">
+        <h4 class="mb-2">Postal Address</h4>
+        <div class="formgrid grid">
+            <div class="field-checkbox col-12 md:col-6">
+                <input type="checkbox" id="same" formControlName="sameAddress" (change)="sameAddressChange($event)">
+                <label for="same">Same as Residential</label>
+            </div>
+            <div class="field col-12 md:col-9">
+                <label for="addressDetail">Address *</label>
+                <input
+                    pInputText
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid border-round appearance-none outline-none focus:border-primary w-full" 
+                    id="addressDetail" 
+                    type="text"
+                    formControlName="addressDetail"
+                >
+                <small class="p-error block" *ngIf="hospitalForm.get('postalAddress')?.get('addressDetail')?.invalid && hospitalForm.get('postalAddress')?.get('addressDetail')?.dirty">Address is required</small>
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="country">Country</label>
+                <select 
+                    class="w-full text-base text-color surface-overlay p-2 border-1 border-solid border-round outline-none focus:border-primary"
+                    id="country"
+                    formControlName="countryId"
+                >
+                    <option [value]="country.id" *ngFor="let country of countryList">
+                        {{country.name}}
+                    </option>
+                </select>
+
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="province">Province</label>
+                <select 
+                    class="w-full text-base text-color surface-overlay p-2 border-1 border-solid border-round outline-none focus:border-primary"
+                    id="province"
+                    formControlName="provinceId"
+                >
+                    <option value="">--Select Province--</option>
+                    <option [value]="province.id" *ngFor="let province of provincePostalList">{{province.name}}</option>
+                </select>
+
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="city">City *</label>
+                <select 
+                    class="w-full text-base text-color surface-overlay p-2 border-1 border-solid border-round outline-none focus:border-primary"
+                    id="city"
+                    formControlName="cityId"
+                >
+                    <option value="0">--Select City--</option>
+                    <option [value]="city.id" *ngFor="let city of cityPostalList">{{city.name}}</option>
+                </select>
+                <small class="p-error block" *ngIf="hospitalForm.get('postalAddress')?.get('cityId')?.invalid && hospitalForm.get('postalAddress')?.get('cityId')?.dirty">City is required</small>
+            </div>
+            <div class="field col-12 md:col-2">
+                <label for="zipCode">Code *</label>
+                <input
+                    pInputText
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid border-round appearance-none outline-none focus:border-primary w-full" 
+                    id="zipCode" 
+                    type="text"
+                    formControlName="zipCode"
+                >
+                <small class="p-error block" *ngIf="hospitalForm.get('postalAddress')?.get('zipCode')?.invalid && hospitalForm.get('postalAddress')?.get('zipCode')?.dirty">Code is required</small>
+            </div>
+        </div>
+    </ng-container>
+
+    <div class="flex justify-content-end flex-wrap">
+        <button 
+            pButton 
+            pRipple 
+            type="submit" 
+            label="Submit" 
+            class="p-button-success m-2"
+            [disabled]="hospitalForm.invalid || isLoading"
+        ></button>
+        <!-- <button 
+            pButton 
+            pRipple 
+            label="Cancel" 
+            class="p-button-danger m-2"
+        ></button> -->
+    </div>
+</form>

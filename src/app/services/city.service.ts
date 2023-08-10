@@ -35,8 +35,8 @@ export class CityService {
     return this.apiService.get(`${controllerName}/${id}`);
   }
 
-  getCitiesList(active: boolean = true): Observable<CityResponseView> {
-    return this.apiService.get(`${controllerName}/CityList/${active}`);
+  getCitiesList(id: number = 0, active: boolean = true): Observable<CityResponseView> {
+    return this.apiService.get(`${controllerName}/CityList/${id}/${active}`);
   }
 
   getCitiesTableList(queryParams?: FilterParamList): Observable<CityPaginatedResponseView> {

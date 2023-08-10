@@ -17,6 +17,26 @@ const routes: Routes = [
   {
     path: 'address-types',
     loadChildren: () => import('./address-types/address-types.module').then(m => m.AddressTypesModule)
+  },
+  {
+    path: 'hospitals',
+    loadChildren: () => import('./hospitals/hospitals.module').then(m => m.HospitalsModule)
+  },
+  {
+    path: 'ailments',
+    loadChildren: () => import('./ailments/ailments.module').then(m => m.AilmentsModule)
+  },
+  {
+    path: 'roles',
+    loadChildren: () => import('./roles/roles.module').then(m => m.RolesModule)
+  },
+  {
+    path: 'genders',
+    loadChildren: () => import('./genders/genders.module').then(m => m.GendersModule)
+  },
+  {
+    path: 'titles',
+    loadChildren: () => import('./titles/titles.module').then(m => m.TitlesModule)
   }
 ];
 

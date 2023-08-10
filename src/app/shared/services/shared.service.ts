@@ -23,6 +23,10 @@ export class SharedService {
     this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
   }
 
+  showInformationMessage(message: string): void {
+    this.messageService.add({ severity: 'info', summary: 'Info', detail: message });
+  }
+
   getTablePaginatorValues(): Array<number> {
     return [10, 25, 50, 75, 100];
   }

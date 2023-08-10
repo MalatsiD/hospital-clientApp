@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { AddressTypeView, AddressTypeViewList } from 'src/app/shared/interfaces/addressTypeView';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { ApiResponse } from 'src/app/shared/interfaces/api-response';
 
 @Component({
   selector: 'app-address-types',
@@ -77,17 +78,18 @@ export class AddressTypesComponent implements OnInit, OnDestroy {
     this.addressTypeService.getAddressTypesTableList(this.filterParams).subscribe({
       next: (result) => {
         if(result.isSuccessful) {
-          this.isLoading = false;
-          this.tableIsLoading = false;
-
           this.totalRecords = result.totalRecords;
           this.addressTypesList = result.response;
         }
+
+        this.isLoading = false;
+        this.tableIsLoading = false;
       },
       error: (err) => {
         this.isLoading = false;
         this.tableIsLoading = false;
-        console.log(err);
+        const errorResult = err.error as ApiResponse;
+        this.sharedService.showErrorMessage(errorResult.errorMessage);
       }
     });
   }
@@ -112,8 +114,9 @@ export class AddressTypesComponent implements OnInit, OnDestroy {
           next: (result) => {
             this.addressTypeChangesResponse(addressType.name, result.isSuccessful, result.errorMessage, 'successfully updated');
           },
-          error: (error) => {
-            console.log(error);
+          error: (err) => {
+            const errorResult = err.error as ApiResponse;
+            this.sharedService.showErrorMessage(errorResult.errorMessage);
           }
         });
       }
@@ -145,8 +148,9 @@ export class AddressTypesComponent implements OnInit, OnDestroy {
           next: (result) => {
             this.addressTypeChangesResponse(addressType.name, result.isSuccessful, result.errorMessage, 'successfully deleted');
           },
-          error: (error) => {
-            console.log(error);
+          error: (err) => {
+            const errorResult = err.error as ApiResponse;
+            this.sharedService.showErrorMessage(errorResult.errorMessage);
           }
         })
       }

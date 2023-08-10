@@ -9,6 +9,7 @@ import { ProvinceService } from 'src/app/services/province.service';
 import { CountryView, CountryViewList } from 'src/app/shared/interfaces/countryView';
 import { CountryService } from 'src/app/services/country.service';
 import { ProvinceDto } from 'src/app/shared/dtos/province-dto';
+import { ApiResponse } from 'src/app/shared/interfaces/api-response';
 
 
 @Component({
@@ -61,7 +62,8 @@ export class ProvinceFormComponent implements OnInit, OnDestroy {
         }
       },
       error: (err) => {
-        console.log(err);
+        const errorResult = err.error as ApiResponse;
+        this.messageService.add({severity:'error', summary:'Error', detail: errorResult.errorMessage});
       }
     })
   }
@@ -102,14 +104,16 @@ export class ProvinceFormComponent implements OnInit, OnDestroy {
       this.provinceService.updateProvince(province, this.provinceEditId).subscribe({
         next: (result) => {
           if(result.isSuccessful) {
-            this.isLoading = false;
             this.messageService.add({severity:'success', summary:'Successfully', detail:`updated ${result.response.name}`});
             this.dataService.updateProvinceSingleData(result.response);
           }
+
+          this.isLoading = false;
         },
         error: (err) => {
           this.isLoading = false;
-          this.messageService.add({severity:'error', summary:'Error', detail: err});
+          const errorResult = err.error as ApiResponse;
+          this.messageService.add({severity:'error', summary:'Error', detail: errorResult.errorMessage});
         }
       })
     } else {
@@ -117,16 +121,17 @@ export class ProvinceFormComponent implements OnInit, OnDestroy {
       this.provinceService.addProvince(province).subscribe({
         next: (result) => {
           if(result.isSuccessful) {
-            this.isLoading = false;
             this.messageService.add({severity:'success', summary:'Successfully', detail:`added ${result.response.name}`});
             this.dataService.updateProvinceSingleData(result.response);
             this.loadForm();
           }
+
+          this.isLoading = false;
         },
         error: (err) => {
           this.isLoading = false;
-          console.log(err)
-          this.messageService.add({severity:'error', summary:'Error', detail: err});
+          const errorResult = err.error as ApiResponse;
+          this.messageService.add({severity:'error', summary:'Error', detail: errorResult.errorMessage});
         }
       });
     }

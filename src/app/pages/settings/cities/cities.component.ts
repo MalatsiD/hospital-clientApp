@@ -80,12 +80,12 @@ export class CitiesComponent implements OnInit, OnDestroy {
     this.cityService.getCitiesTableList(this.filterParams).subscribe({
       next: (result) => {
         if(result.isSuccessful) {
-          this.isLoading = false;
-          this.tableIsLoading = false;
-
           this.totalRecords = result.totalRecords;
           this.citiesList = result.response;
         }
+
+        this.isLoading = false;
+        this.tableIsLoading = false;
       },
       error: (err) => {
         this.isLoading = false;

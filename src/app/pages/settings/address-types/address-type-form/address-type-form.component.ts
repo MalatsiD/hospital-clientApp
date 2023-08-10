@@ -6,6 +6,7 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { DataService } from 'src/app/shared/services/data.service';
 import { AddressTypeDto } from 'src/app/shared/dtos/address-type-dto';
+import { ApiResponse } from 'src/app/shared/interfaces/api-response';
 
 @Component({
   selector: 'app-address-type-form',
@@ -51,8 +52,14 @@ export class AddressTypeFormComponent implements OnInit {
             this.selectedAddressType = result.response;
             this.addressTypeEditId = this.config.data.id;
             this.patchFormValues(this.selectedAddressType);
-            this.isLoading = false;
           }
+
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.isLoading = false;
+          const errorResult = err.error as ApiResponse;
+          this.messageService.add({severity:'error', summary:'Error', detail: errorResult.errorMessage});
         }
       })
     }
@@ -76,14 +83,16 @@ export class AddressTypeFormComponent implements OnInit {
       this.addressTypeService.updateAddressType(city, this.addressTypeEditId).subscribe({
         next: (result) => {
           if(result.isSuccessful) {
-            this.isLoading = false;
             this.messageService.add({severity:'success', summary:'Successfully', detail:`updated ${result.response.name}`});
             this.dataService.updateAddressTypeSingleData(result.response);
           }
+
+          this.isLoading = false;
         },
         error: (err) => {
           this.isLoading = false;
-          this.messageService.add({severity:'error', summary:'Error', detail: err});
+          const errorResult = err.error as ApiResponse;
+          this.messageService.add({severity:'error', summary:'Error', detail: errorResult.errorMessage});
         }
       })
     } else {
@@ -91,16 +100,18 @@ export class AddressTypeFormComponent implements OnInit {
       this.addressTypeService.addAddressType(city).subscribe({
         next: (result) => {
           if(result.isSuccessful) {
-            this.isLoading = false;
             this.messageService.add({severity:'success', summary:'Successfully', detail:`added ${result.response.name}`});
             this.dataService.updateAddressTypeSingleData(result.response);
             this.loadForm();
           }
+
+          this.isLoading = false;
         },
         error: (err) => {
           this.isLoading = false;
           console.log(err)
-          this.messageService.add({severity:'error', summary:'Error', detail: err});
+          const errorResult = err.error as ApiResponse;
+          this.messageService.add({severity:'error', summary:'Error', detail: errorResult.errorMessage});
         }
       });
     }

@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ProvinceService } from 'src/app/services/province.service';
 import { MessageService } from 'primeng/api';
+import { ApiResponse } from 'src/app/shared/interfaces/api-response';
 
 @Component({
   selector: 'app-city-form',
@@ -51,14 +52,15 @@ export class CityFormComponent implements OnInit {
   }
 
   loadProvinces(): void {
-    this.provinceService.getProvincesList(true).subscribe({
+    this.provinceService.getProvincesList(0, true).subscribe({
       next: (result) => {
         if(result.isSuccessful) {
           this.provinceList = result.response;
         }
       },
       error: (err) => {
-        console.log(err);
+        const errorResult = err.error as ApiResponse;
+        this.messageService.add({severity:'error', summary:'Error', detail: errorResult.errorMessage});
       }
     });
   }
@@ -75,7 +77,7 @@ export class CityFormComponent implements OnInit {
             this.isLoading = false;
           }
         }
-      })
+      });
     }
   }
 
@@ -98,14 +100,16 @@ export class CityFormComponent implements OnInit {
       this.cityService.updateCity(city, this.cityEditId).subscribe({
         next: (result) => {
           if(result.isSuccessful) {
-            this.isLoading = false;
             this.messageService.add({severity:'success', summary:'Successfully', detail:`updated ${result.response.name}`});
             this.dataService.updateCitySingleData(result.response);
           }
+
+          this.isLoading = false;
         },
         error: (err) => {
           this.isLoading = false;
-          this.messageService.add({severity:'error', summary:'Error', detail: err});
+          const errorResult = err.error as ApiResponse;
+          this.messageService.add({severity:'error', summary:'Error', detail: errorResult.errorMessage});
         }
       })
     } else {
@@ -113,16 +117,17 @@ export class CityFormComponent implements OnInit {
       this.cityService.addCity(city).subscribe({
         next: (result) => {
           if(result.isSuccessful) {
-            this.isLoading = false;
             this.messageService.add({severity:'success', summary:'Successfully', detail:`added ${result.response.name}`});
             this.dataService.updateCitySingleData(result.response);
             this.loadForm();
           }
+
+          this.isLoading = false;
         },
         error: (err) => {
           this.isLoading = false;
-          console.log(err)
-          this.messageService.add({severity:'error', summary:'Error', detail: err});
+          const errorResult = err.error as ApiResponse;
+          this.messageService.add({severity:'error', summary:'Error', detail: errorResult.errorMessage});
         }
       });
     }

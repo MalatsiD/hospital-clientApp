@@ -8,6 +8,7 @@ import { ProvinceService } from 'src/app/services/province.service';
 import { FilterParamList } from 'src/app/shared/interfaces/filter-params';
 import { ProvinceView, ProvinceViewList } from 'src/app/shared/interfaces/provinceView';
 import { SharedService } from 'src/app/shared/services/shared.service';
+import { ApiResponse } from 'src/app/shared/interfaces/api-response';
 
 @Component({
   selector: 'app-provinces',
@@ -77,17 +78,18 @@ export class ProvincesComponent implements OnInit, OnDestroy {
     this.provinceService.getProvincesTableList(this.filterParams).subscribe({
       next: (result) => {
         if(result.isSuccessful) {
-          this.isLoading = false;
-          this.tableIsLoading = false;
-
           this.totalRecords = result.totalRecords;
           this.provincesList = result.response;
         }
+
+        this.isLoading = false;
+        this.tableIsLoading = false;
       },
       error: (err) => {
         this.isLoading = false;
         this.tableIsLoading = false;
-        console.log(err);
+        const errorResult = err.error as ApiResponse;
+        this.sharedService.showErrorMessage(errorResult.errorMessage);
       }
     });
   }
@@ -112,8 +114,9 @@ export class ProvincesComponent implements OnInit, OnDestroy {
           next: (result) => {
             this.provinceChangesResponse(province.name, result.isSuccessful, result.errorMessage, 'successfully updated');
           },
-          error: (error) => {
-            console.log(error);
+          error: (err) => {
+            const errorResult = err.error as ApiResponse;
+            this.sharedService.showErrorMessage(errorResult.errorMessage);
           }
         });
       }
@@ -145,8 +148,9 @@ export class ProvincesComponent implements OnInit, OnDestroy {
           next: (result) => {
             this.provinceChangesResponse(province.name, result.isSuccessful, result.errorMessage, 'successfully deleted');
           },
-          error: (error) => {
-            console.log(error);
+          error: (err) => {
+            const errorResult = err.error as ApiResponse;
+            this.sharedService.showErrorMessage(errorResult.errorMessage);
           }
         })
       }

@@ -35,8 +35,8 @@ export class ProvinceService {
     return this.apiService.get(`${controllerName}/${id}`);
   }
 
-  getProvincesList(active: boolean = true): Observable<ProvinceResponseView> {
-    return this.apiService.get(`${controllerName}/ProvinceList/${active}`);
+  getProvincesList(id: number = 0, active: boolean = true): Observable<ProvinceResponseView> {
+    return this.apiService.get(`${controllerName}/ProvinceList/${id}/${active}`);
   }
 
   getProvincesTableList(queryParams?: FilterParamList): Observable<ProvincePaginatedResponseView> {

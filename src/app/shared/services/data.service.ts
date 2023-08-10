@@ -4,6 +4,11 @@ import { CountryView } from '../interfaces/countryView';
 import { ProvinceView } from '../interfaces/provinceView';
 import { CityView } from '../interfaces/cityView';
 import { AddressTypeView } from '../interfaces/addressTypeView';
+import { HospitalView } from '../interfaces/hospitalView';
+import { AilmentView } from '../interfaces/ailmentView';
+import { RoleView } from '../interfaces/roleView';
+import { GenderView } from '../interfaces/genderView';
+import { TitleView } from '../interfaces/titleView';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +26,21 @@ export class DataService {
 
   addressType: AddressTypeView = {} as CityView;
   private addressTypeingleData = new BehaviorSubject<AddressTypeView>(this.addressType);
+
+  hospital: HospitalView = {} as HospitalView;
+  private hospitalSingleData = new BehaviorSubject<HospitalView>(this.hospital);
+
+  ailment: AilmentView = {} as AilmentView;
+  private ailmentSingleData = new BehaviorSubject<AilmentView>(this.ailment);
+
+  role: RoleView = {} as RoleView;
+  private roleSingleData = new BehaviorSubject<RoleView>(this.role);
+
+  gender: GenderView = {} as GenderView;
+  private genderSingleData = new BehaviorSubject<GenderView>(this.gender);
+
+  title: TitleView = {} as TitleView;
+  private titleSingleData = new BehaviorSubject<TitleView>(this.title);
 
   constructor() { }
 
@@ -55,4 +75,45 @@ export class DataService {
   getAddressTypeSingleData(): Observable<AddressTypeView> {
     return this.addressTypeingleData.asObservable();
   }
+
+  updateHospitalSingleData(data: HospitalView): void {
+    this.hospitalSingleData.next(data);
+  }
+
+  getHospitalSingleData(): Observable<HospitalView> {
+    return this.hospitalSingleData.asObservable();
+  }
+
+  updateAilmentSingleData(data: AilmentView): void {
+    this.ailmentSingleData.next(data);
+  }
+
+  getAilmentSingleData(): Observable<AilmentView> {
+    return this.ailmentSingleData.asObservable();
+  }
+
+  updateRoleSingleData(data: RoleView): void {
+    this.roleSingleData.next(data);
+  }
+
+  getRoleSingleData(): Observable<RoleView> {
+    return this.roleSingleData.asObservable();
+  }
+
+  updateGenderSingleData(data: GenderView): void {
+    this.genderSingleData.next(data);
+  }
+
+  getGenderSingleData(): Observable<GenderView> {
+    return this.genderSingleData.asObservable();
+  }
+
+  updateTitleSingleData(data: TitleView): void {
+    this.titleSingleData.next(data);
+  }
+
+  getTitleSingleData(): Observable<TitleView> {
+    return this.titleSingleData.asObservable();
+  }
+  
 }
